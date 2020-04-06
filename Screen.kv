@@ -1,0 +1,29 @@
+<MainScreen>: 
+    cols:2
+    canvas:
+        Button:
+            text:"Enter sub View"
+            size_hint: None, None
+            pos_hint: {'right': 1,'top':1}
+            size: 150, 50
+            on_press:root.manager.current="sub"
+        Label:
+            size_hint: None, None
+            pos_hint: {'left': 1,'top':1}
+            size: 150, 50
+            text:"Main"
+      
+ 
+<SubScreen>:
+    Button:
+        size_hint: None, None
+        pos_hint: {'right': 1,'top':1}
+        size: 150, 50
+        text:"Return"
+        on_press:root.manager.current="main"
+    Label:
+        text:"Sub"
+        size_hint: None, None
+        pos_hint: {'left': 1,'top':1}
+        size: 150, 50
+
