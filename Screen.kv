@@ -1,17 +1,55 @@
 <MainScreen>: 
-    cols:2
-    canvas:
-        Button:
-            text:"Enter sub View"
-            size_hint: None, None
-            pos_hint: {'right': 1,'top':1}
-            size: 150, 50
-            on_press:root.manager.current="sub"
+    GridLayout:
+        cols: 2
         Label:
-            size_hint: None, None
-            pos_hint: {'left': 1,'top':1}
-            size: 150, 50
-            text:"Main"
+            size_hint: 1, 1
+            text: "account"
+            size: 50, self.height
+            font_size: 30  
+            center_x: root.width / 4
+            
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        TextInput: 
+            # multiline: false
+        Label:
+            size_hint: 1, 1
+            text:"password"
+            text_size: self.size
+            size: 50, self.height
+            font_size: 30  
+            center_x: root.width / 4
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+            # halign: "center"
+            # valign: "center"
+        TextInput:
+            # multiline: false
+            password: True
+        Label:
+            id: "gfgdg"
+        Label:
+            Button:
+            #Label:
+                text: "join" 
+                on_press:root.manager.current="sub"
+                center_x: root.width * 3 / 4
+                center: self.parent.center
+                
+                size_hint: None, 1
+        # Button:
+        #     text:"Enter sub View"
+        #     size_hint: None, None
+        #     pos_hint: {'right': 1,'top':1}
+        #     size: 150, 50
+        #     on_press:root.manager.current="sub"
+        # Label:
+        #     size_hint: None, None
+        #     pos_hint: {'left': 1,'top':1}
+        #     size: 150, 50
+        #     text:"Main"
       
  
 <SubScreen>:
