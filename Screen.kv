@@ -3,7 +3,7 @@
         cols: 2
         Label:
             size_hint: 1, 1
-            text: "account"
+            text: "用户名"
             size: 50, self.height
             font_size: 30  
             center_x: root.width / 4
@@ -15,7 +15,7 @@
             # multiline: false
         Label:
             size_hint: 1, 1
-            text:"password"
+            text:"密码"
             text_size: self.size
             size: 50, self.height
             font_size: 30  
@@ -33,7 +33,7 @@
         Label:
             Button:
             #Label:
-                text: "join" 
+                text: "登录" 
                 on_press:root.manager.current="sub"
                 center_x: root.width * 3 / 4
                 center: self.parent.center
