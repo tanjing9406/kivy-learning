@@ -3,7 +3,9 @@
 <MainScreen>: 
     GridLayout:
         cols: 2
+        
         Label:
+            
             size_hint: 1, 1
             text: "用户名"
             size: 50, self.height
@@ -14,6 +16,11 @@
             halign: 'center'
             valign: 'center'
         TextInput: 
+            id: user_name
+            pos_hint: {'right': 5}
+            size_hint: 1,1
+            halign: 'center'
+            valign: 'middle'
             # multiline: false
         Label:
             size_hint: 1, 1
@@ -28,6 +35,11 @@
             # halign: "center"
             # valign: "center"
         TextInput:
+            id: pass_word
+            size_hint: 1,1
+            halign: 'center'
+            valign: 'middle'
+            
             # multiline: false
             password: True
         Label:
@@ -35,8 +47,8 @@
         Label:
             Button:
             #Label:
+                on_press: root.user()
                 text: "登录" 
-                on_press:root.manager.current="sub"
                 center_x: root.width * 3 / 4
                 center: self.parent.center
                 
