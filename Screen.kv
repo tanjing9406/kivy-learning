@@ -3,13 +3,16 @@
 <MainScreen>: 
     GridLayout:
         cols: 2
+        rows: 3
+        padding: 150
+        spacing: 50
         
         Label:
             
             size_hint: 1, 1
             text: "用户名"
             size: 50, self.height
-            font_size: 30  
+            font_size: 20  
             center_x: root.width / 4
             
             text_size: self.size
@@ -17,17 +20,16 @@
             valign: 'center'
         TextInput: 
             id: user_name
-            pos_hint: {'right': 5}
-            size_hint: 1,1
-            halign: 'center'
-            valign: 'middle'
-            # multiline: false
+            font_size: 50 
+
+           # size_hint: 0.1,None
+            
         Label:
             size_hint: 1, 1
             text:"密码"
             text_size: self.size
             size: 50, self.height
-            font_size: 30  
+            font_size: 20  
             center_x: root.width / 4
             text_size: self.size
             halign: 'center'
@@ -36,9 +38,8 @@
             # valign: "center"
         TextInput:
             id: pass_word
-            size_hint: 1,1
-            halign: 'center'
-            valign: 'middle'
+           # size_hint: 0.1,None
+            font_size: 50 
             
             # multiline: false
             password: True
@@ -52,7 +53,7 @@
                 center_x: root.width * 3 / 4
                 center: self.parent.center
                 
-                size_hint: None, 1
+                size_hint: 1, 1
         # Button:
         #     text:"Enter sub View"
         #     size_hint: None, None
@@ -67,15 +68,82 @@
       
  
 <SubScreen>:
-    Button:
-        size_hint: None, None
-        pos_hint: {'right': 1,'top':1}
-        size: 150, 50
-        text:"Return"
-        on_press:root.manager.current="main"
-    Label:
-        text:"Sub"
-        size_hint: None, None
-        pos_hint: {'left': 1,'top':1}
-        size: 150, 50
+    GridLayout:
+        cols: 2
+        rows: 5
+        padding: 150
+        spacing: 100
+        Label:
+            Button:
+                size_hint: 1, 1
+                #center_x: root.width * 3 / 4
+                #center: self.parent.center
+                y: 500
+                x: 0
+               # pos: 100,200
+                #sh_sum: 10
+                #size: 150, 50
+                text:"二维码扫描"
+                on_press:root.manager.current="main"
+        Label:
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"手动领料"
+                y: 500
+                x: 250
+                
+                on_press:root.manager.current="main"
+        TextInput: 
+            y: 500
+            x: 350
+            size: 150, 50
+            font_size: 50 
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"手动入库"
+                y: 300
+                x: 250
+                on_press:root.manager.current="main"
+        TextInput: 
+            y: 300
+            x: 300
+            size: 150, 50
+            font_size: 50 
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"显示所有材料"
+                y: 200
+                x: 250
+                on_press:root.manager.current="main"
+        TextInput: 
+            y: 200
+            x: 300
+            size: 150, 50
+            font_size: 50 
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"盘点"
+                y: 100
+                x: 250
+                on_press:root.manager.current="main"
+        TextInput: 
+            y: 100
+            x: 300
+            size: 150, 50
+            font_size: 50 
+        
+
+
 
