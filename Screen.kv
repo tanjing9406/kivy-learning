@@ -69,12 +69,11 @@
  
 <SubScreen>:
     GridLayout:
-        cols: 2
+        cols: 1
         rows: 5
         padding: 150
         spacing: 100
-        Label:
-            Button:
+        Button:
                 size_hint: 1, 1
                 #center_x: root.width * 3 / 4
                 #center: self.parent.center
@@ -85,9 +84,8 @@
                 #size: 150, 50
                 text:"二维码扫描"
                 on_press:root.manager.current="main"
-        Label:
-        Label:
-            Button:
+        
+        Button:
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
@@ -95,14 +93,9 @@
                 y: 500
                 x: 250
                 
-                on_press:root.manager.current="main"
-        TextInput: 
-            y: 500
-            x: 350
-            size: 150, 50
-            font_size: 50 
-        Label:
-            Button:
+                on_press:root.manager.current="neck"
+        
+        Button:
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
@@ -110,13 +103,8 @@
                 y: 300
                 x: 250
                 on_press:root.manager.current="main"
-        TextInput: 
-            y: 300
-            x: 300
-            size: 150, 50
-            font_size: 50 
-        Label:
-            Button:
+        
+        Button:
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
@@ -124,13 +112,8 @@
                 y: 200
                 x: 250
                 on_press:root.manager.current="main"
-        TextInput: 
-            y: 200
-            x: 300
-            size: 150, 50
-            font_size: 50 
-        Label:
-            Button:
+        
+        Button:
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
@@ -138,12 +121,50 @@
                 y: 100
                 x: 250
                 on_press:root.manager.current="main"
-        TextInput: 
-            y: 100
-            x: 300
+       
+<NeckScreen>:
+    GridLayout:
+        cols: 2
+        rows: 5
+        padding: 150
+        spacing: 100
+        Label:
+            text:"材料名称"
+            size_hint: 1, 1
             size: 150, 50
+        TextInput: 
             font_size: 50 
-        
-
-
+        Label:
+            text:"剩余数量"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            font_size: 50 
+        Label:
+            text:"剩余卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            font_size: 50 
+        Label:
+            text:"领料卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            font_size: 50 
+        Label:
+            text:"材料名称"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            font_size: 50 
+        Label:
+            
+         
+        Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"保存数据"
+                
 

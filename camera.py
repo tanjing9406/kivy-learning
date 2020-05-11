@@ -36,10 +36,11 @@ class MainScreen(Screen,Widget):
                else:
                    print('账户名或密码错误')
  
-class SubScreen(Screen):
+class SubScreen(Screen,Widget):
     pass
  
- 
+class NeckScreen(Screen):
+    pass
 class ScreenApp(App): 
     def load_kv(self, filename=None):
         with open('Screen.kv', encoding='utf-8') as f:
@@ -50,8 +51,9 @@ class ScreenApp(App):
         sm = ScreenManager()
         scm = MainScreen(name="main")
         scs = SubScreen(name="sub")
+        # scn = NeckScreen(name="neck")
         sm.add_widget(scm)
         sm.add_widget(scs)
+        # sm.add_widget(scn)
         return sm
- 
 ScreenApp().run()
