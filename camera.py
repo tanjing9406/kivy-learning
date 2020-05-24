@@ -3,8 +3,10 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty, BooleanProperty
+    NumericProperty, ReferenceListProperty, ObjectProperty, BooleanProperty, StringProperty
 )
+from kivy.uix.scatter import Scatter
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -12,6 +14,7 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen#屏幕管理器
 import os
 import csv
+
 # 引入资源目录,如res目录位于项目根目录下，写相对路径(不要写绝对路径)相当于告诉kivy　DroidSansFallback.ttf 字体位于res目录中
 from kivy.resources import resource_add_path, resource_find
 resource_add_path(os.path.abspath('./data/fonts'))
@@ -20,6 +23,8 @@ from kivy.core.text import LabelBase
 LabelBase.register('Roboto', 'weiruanyahei.ttf')
 
 class MainScreen(Screen,Widget):
+    score = NumericProperty(0)
+    
 
     def user(self):
         username = self.ids['user_name']
@@ -36,12 +41,31 @@ class MainScreen(Screen,Widget):
                else:
                    print('账户名或密码错误')
  
-class SubScreen(Screen,Widget):
+class SubScreen(Screen):
     pass
  
 class NeckScreen(Screen):
-    pass
+    player1 = NumericProperty(0)
+        
+    def serve_ball(self, vel=(4, 0)):
+        self.ball.center = self.center
+        self.ball.velocity = vel
+
+    def ling(self):
+        mingcheng = self.ids['ming-cheng']
+        
+
+        print(mingcheng)
+        with open('materials.csv','r', newline = '', encoding = 'utf-8')  as f:
+           row1 = csv.reader(f)
+           for row in row1:
+               if mingcheng.text==row[0]:
+
+                   print(row[1])
+                   self.player1.score == row[1]
+                   self.serve_ball(vel=(4, 0))                   
 class ScreenApp(App): 
+
     def load_kv(self, filename=None):
         with open('Screen.kv', encoding='utf-8') as f:
             Builder.load_string(f.read())
@@ -51,9 +75,10 @@ class ScreenApp(App):
         sm = ScreenManager()
         scm = MainScreen(name="main")
         scs = SubScreen(name="sub")
-        # scn = NeckScreen(name="neck")
+        scn = NeckScreen(name="neck")
         sm.add_widget(scm)
         sm.add_widget(scs)
-        # sm.add_widget(scn)
+        sm.add_widget(scn)
+        
         return sm
 ScreenApp().run()

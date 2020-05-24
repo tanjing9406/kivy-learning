@@ -22,7 +22,6 @@
             id: user_name
             font_size: 50 
 
-           # size_hint: 0.1,None
             
         Label:
             size_hint: 1, 1
@@ -34,38 +33,25 @@
             text_size: self.size
             halign: 'center'
             valign: 'center'
-            # halign: "center"
-            # valign: "center"
+          
         TextInput:
             id: pass_word
-           # size_hint: 0.1,None
+          
             font_size: 50 
             
-            # multiline: false
             password: True
         Label:
             id: "gfgdg"
         Label:
             Button:
-            #Label:
+            
                 on_press: root.user()
                 text: "登录" 
                 center_x: root.width * 3 / 4
                 center: self.parent.center
                 
                 size_hint: 1, 1
-        # Button:
-        #     text:"Enter sub View"
-        #     size_hint: None, None
-        #     pos_hint: {'right': 1,'top':1}
-        #     size: 150, 50
-        #     on_press:root.manager.current="sub"
-        # Label:
-        #     size_hint: None, None
-        #     pos_hint: {'left': 1,'top':1}
-        #     size: 150, 50
-        #     text:"Main"
-      
+       
  
 <SubScreen>:
     GridLayout:
@@ -73,73 +59,82 @@
         rows: 5
         padding: 150
         spacing: 100
-        Button:
-            size_hint: 1, 1
-            #center_x: root.width * 3 / 4
-            #center: self.parent.center
-            y: 500
-            x: 0
-            # pos: 100,200
-            #sh_sum: 10
-            #size: 150, 50
-            text:"二维码扫描"
-            on_press:root.manager.current="main"
-        
-        Button:
-            size_hint: 1, 1
-            center: self.parent.center
-            size: 150, 50
-            text:"手动领料"
-            y: 500
-            x: 250
+        Label:
+            Button:
+                size_hint: 1, 1
+
+                y: 500
+                x: 0
             
-            on_press:root.manager.current="neck"
-        
-        Button:
-            size_hint: 1, 1
-            center: self.parent.center
-            size: 150, 50
-            text:"手动入库"
-            y: 300
-            x: 250
-            on_press:root.manager.current="main"
-        
-        Button:
-            size_hint: 1, 1
-            center: self.parent.center
-            size: 150, 50
-            text:"显示所有材料"
-            y: 200
-            x: 250
-            on_press:root.manager.current="main"
-        
-        Button:
-            size_hint: 1, 1
-            center: self.parent.center
-            size: 150, 50
-            text:"盘点"
-            y: 100
-            x: 250
-            on_press:root.manager.current="main"
+                text:"二维码扫描"
+                on_press:root.manager.current="main"
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"手动领料"
+                y: 500
+                x: 250
+            
+                on_press:root.manager.current="neck"
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"手动入库"
+                y: 300
+                x: 250
+                on_press:root.manager.current="main"
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"显示所有材料"
+                y: 200
+                x: 250
+                on_press:root.manager.current="main"
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"盘点"
+                y: 100
+                x: 250
+                on_press:root.manager.current="main"
        
 <NeckScreen>:
     GridLayout:
         cols: 2
         rows: 5
-        padding: 150
-        spacing: 100
+        padding: 100
+        spacing: 80
         Label:
             text:"材料名称"
+
+            size: 50, self.height
+
+            
+            size: 50, self.height
+            
+
             size_hint: 1, 1
             size: 150, 50
         TextInput: 
-            font_size: 50 
+            id: ming-cheng
+            font_size: 10 
         Label:
             text:"剩余数量"
             size_hint: 1, 1
             size: 150, 50
-        TextInput: 
-            font_size: 50 
+        Label: 
+            # text: str('0.25*10')
+            on_press: root.serve_ball()
+            text: str(root.player1.score)
+            font_size: 10 
         Label:
             text:"剩余卷数"
             size_hint: 1, 1
@@ -152,19 +147,23 @@
             size: 150, 50
         TextInput: 
             font_size: 50 
-        Label:
-            text:"材料名称"
-            size_hint: 1, 1
-            size: 150, 50
-        TextInput: 
-            font_size: 50 
-        Label:
+        
+
+ 
             
-         
-        Button:
-            size_hint: 1, 1
-            center: self.parent.center
-            size: 150, 50
-            text:"保存数据"
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"保存数据"
+        Label:
+            Button:
+                on_press: root.ling()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"查找"
+
                 
 
