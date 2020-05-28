@@ -62,7 +62,7 @@ class NeckScreen(Screen):
                if mingcheng.text==row[0]:
 
                    print(row[1])
-                   self.player1.score == row[1]
+                   self.player1 == row[1]
                    self.serve_ball(vel=(4, 0))                   
 class ScreenApp(App): 
 
