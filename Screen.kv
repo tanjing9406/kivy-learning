@@ -109,7 +109,7 @@
 <NeckScreen>:
     GridLayout:
         cols: 2
-        rows: 5
+        rows: 6
         padding: 100
         spacing: 80
         Label:
@@ -130,35 +130,47 @@
             text:"剩余数量"
             size_hint: 1, 1
             size: 150, 50
-        Label: 
-            # text: str('0.25*10')
-            on_press: root.serve_ball()
-            text: str(root.player1.score)
-            font_size: 10 
+        Label:
+            top: root.top - 50
+            text: str(root.score)
+            font_size: 50 
         Label:
             text:"剩余卷数"
             size_hint: 1, 1
             size: 150, 50
-        TextInput: 
-            font_size: 50 
+        Label:
+            top: root.top - 50
+            text: str(root.score1)
+            font_size: 50  
         Label:
             text:"领料卷数"
             size_hint: 1, 1
             size: 150, 50
-        TextInput: 
-            font_size: 50 
+        TextInput:
+            id: ling-liao
+            font_size: 10 
+        Label:
+            text:"领料数量"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.score3)
+            font_size: 50  
         
 
  
             
         Label:
             Button:
+                on_press: root.lend_materials()
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
                 text:"保存数据"
         Label:
             Button:
+                
                 on_press: root.ling()
                 size_hint: 1, 1
                 center: self.parent.center

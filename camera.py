@@ -23,7 +23,7 @@ from kivy.core.text import LabelBase
 LabelBase.register('Roboto', 'weiruanyahei.ttf')
 
 class MainScreen(Screen,Widget):
-    score = NumericProperty(0)
+    # score = NumericProperty(0)
     
 
     def user(self):
@@ -43,14 +43,32 @@ class MainScreen(Screen,Widget):
  
 class SubScreen(Screen):
     pass
+
+class Material:
+    def __init__(self,name,amount,cylinder):
+        self.name = name
+        self.amount = amount
+        self.cylinder = cylinder
+        
  
 class NeckScreen(Screen):
-    player1 = NumericProperty(0)
-        
-    def serve_ball(self, vel=(4, 0)):
-        self.ball.center = self.center
-        self.ball.velocity = vel
+    
+    score = NumericProperty(0)
+    score1 = NumericProperty(0)
+    score2 = NumericProperty(0)
+    score3 = NumericProperty(0)
 
+    def __init__(self, **kwargs):
+        super(NeckScreen, self).__init__(**kwargs)
+        self.materials = []
+        with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
+           reader = csv.reader(f)
+           for row in reader:
+              print(row)
+              material = Material(row[0],row[1],row[2])
+              self.materials.append(material)
+              
+    
     def ling(self):
         mingcheng = self.ids['ming-cheng']
         
@@ -60,10 +78,105 @@ class NeckScreen(Screen):
            row1 = csv.reader(f)
            for row in row1:
                if mingcheng.text==row[0]:
+                   self.score = float(row[1])
+                   self.score1 = float(row[2])
+                   #####
 
-                   print(row[1])
-                   self.player1.score == row[1]
-                   self.serve_ball(vel=(4, 0))                   
+
+
+                   #####
+    
+    #  def menu(self):
+    #     print('欢迎来到材料管理系统，数据很重要，请谨慎操作。\n')
+    #     while True:
+    #         print('1.显示所有材料\n2.领料\n3.入库\n4.退出系统\n')
+    #         choice = int(input('请输入数字选择对应的功能：'))
+    #         if choice == 1:
+    #             self.show_all_materials()
+    #         elif choice == 2:
+    #             self.lend_materials()
+    #         elif choice == 3:
+    #             self.but_materials()
+    #         elif choice == 4:
+    #            print('感谢您认真的工作，很荣幸再次给您带来服务')
+    #            break
+    #  def show_all_materials(self):
+    #     print('材料信息如下：')
+    #     for book in self.materials:
+    #         print(book)
+    def check_book(self,name):
+        print('111',name)
+        for book in self.materials:
+            if book.name == name:
+                return book
+    def delete(self):
+        
+        ls3 = []
+        for book in self.materials:
+           book2 = [book.name,book.amount,book.cylinder]
+           ls3.append(book2)
+        a = ['材料名称','材料重量','材料卷数','材料用途']
+        with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
+           writer = csv.writer(f)
+           writer.writerow(a)
+        ls4 = ls3
+        for ls5 in ls4:
+           with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
+              writer = csv.writer(f)
+              writer.writerow(ls5)
+              
+    def lend_materials(self):
+        name = self.ids['ming-cheng'].text
+        lingliao = self.ids['ling-liao'].text
+        # name = input('请输入材料的名称：')
+        # cylinder =input('请输入所领卷数：')
+        res = self.check_book(name)
+        print('领取的材料是：', res)
+        requisition =float(res.amount)/float(res.cylinder)
+        univolume1 =float(requisition)*int(lingliao)
+        univolume2 =int(univolume1)
+        print('领取材料重量：', univolume2)
+        self.score3 = int(univolume2)
+        res.amount=float(res.amount)-univolume2
+
+        cylinder=float(res.cylinder)-float(lingliao)
+        res.cylinder=round(cylinder,0)
+        # res.cylinder=int(cylinder)
+        print('领取后，材料剩余是：',res)
+        self.delete()
+        
+              
+    # def but_materials(self):
+    #     name = input('请输入材料的名称：')
+    #     amount = input('请输入入库数量：')
+    #     cylinder =input('请输入要入库卷数：')
+    #     res = self.check_book(name)
+    #     print('入库的材料是：', res)
+    #     res.amount =int(res.amount)+int(amount)
+    #     res.cylinder =int(res.cylinder)+int(cylinder)
+    #     print('入库后材料的重量：', res.amount)
+    #     print('入库后材料的卷数：', res.cylinder)
+    #     self.delete()
+
+
+
+        #####
+    # def liao(self):
+    #     mingcheng = self.ids['ming-cheng']
+    #     lingliao = self.ids['ling-liao']
+       
+    #     print(mingcheng)
+    #     with open('materials.csv','r', newline = '', encoding = 'utf-8')  as f:
+    #        row2 = csv.reader(f)
+    #        for row in row2:
+    #            if mingcheng.text==row[0]:
+    #                univolume = float(row[1])/float(row[2])
+    #                univolume1 = univolume*float(lingliao.text)
+    #                print(univolume1)
+    #                self.score3 = int(univolume1)
+
+                   
+                                
 class ScreenApp(App): 
 
     def load_kv(self, filename=None):
