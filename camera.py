@@ -15,6 +15,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen#屏幕管理器
 import os
 import csv
 
+from kivy.config import Config
+Config.set('graphics', 'fullscreen', 1)
+
 # 引入资源目录,如res目录位于项目根目录下，写相对路径(不要写绝对路径)相当于告诉kivy　DroidSansFallback.ttf 字体位于res目录中
 from kivy.resources import resource_add_path, resource_find
 resource_add_path(os.path.abspath('./data/fonts'))
@@ -175,14 +178,6 @@ class NeckScreen(Screen):
     #                print(univolume1)
     #                self.score3 = int(univolume1)
 
-<<<<<<< HEAD
-                   
-                                
-=======
-                   print(row[1])
-                   self.player1 == row[1]
-                   self.serve_ball(vel=(4, 0))                   
->>>>>>> 44f2e0ab99e2cceed0d0a8b6e0219487e1d4ea25
 class ScreenApp(App): 
 
     def load_kv(self, filename=None):
