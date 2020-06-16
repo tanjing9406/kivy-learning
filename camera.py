@@ -175,8 +175,14 @@ class NeckScreen(Screen):
     #                print(univolume1)
     #                self.score3 = int(univolume1)
 
+<<<<<<< HEAD
                    
                                 
+=======
+                   print(row[1])
+                   self.player1 == row[1]
+                   self.serve_ball(vel=(4, 0))                   
+>>>>>>> 44f2e0ab99e2cceed0d0a8b6e0219487e1d4ea25
 class ScreenApp(App): 
 
     def load_kv(self, filename=None):
