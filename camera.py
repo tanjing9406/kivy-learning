@@ -3,7 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty, BooleanProperty, StringProperty
+    NumericProperty, ReferenceListProperty, ObjectProperty, BooleanProperty, StringProperty,ListProperty
 )
 from kivy.uix.scatter import Scatter
 from kivy.uix.floatlayout import FloatLayout
@@ -12,9 +12,15 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen#屏幕管理器
+from kivy.uix.recycleview.views import RecycleDataViewBehavior
+
+from kivy.uix.recyclegridlayout import RecycleGridLayout
+from kivy.uix.behaviors import FocusBehavior
+from kivy.uix.recycleview.layout import LayoutSelectionBehavior
+from kivy.uix.popup import Popup
 import os
 import csv
-
+import sqlite3
 from kivy.config import Config
 Config.set('graphics', 'fullscreen', 1)
 
@@ -26,7 +32,7 @@ from kivy.core.text import LabelBase
 LabelBase.register('Roboto', 'weiruanyahei.ttf')
 
 class MainScreen(Screen,Widget):
-    # score = NumericProperty(0)
+    
     
 
     def user(self):
@@ -53,6 +59,49 @@ class Material:
         self.amount = amount
         self.cylinder = cylinder
         
+class ChunChu:
+    score = NumericProperty(0)
+    score1 = NumericProperty(0)
+    def __init__(self, **kwargs):
+        super(ChunChu, self).__init__(**kwargs)
+        self.materials = []
+        with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
+           reader = csv.reader(f)
+           for row in reader:
+              
+              material = Material(row[0],row[1],row[2])
+              self.materials.append(material)
+    
+    def ling(self,mingcheng):
+        
+        with open('materials.csv','r', newline = '', encoding = 'utf-8')  as f:
+           row1 = csv.reader(f)
+           for row in row1:
+               if mingcheng==row[0]:
+                   self.score = float(row[1])
+                   self.score1 = float(row[2])
+
+    def check_book(self,name):
+        
+        for book in self.materials:
+            if book.name == name:
+                return book
+    
+    def delete(self):
+        ls3 = []
+        for book in self.materials:
+            book2 = [book.name,book.amount,book.cylinder,book.use]
+            ls3.append(book2)
+        a = ['材料名称','材料重量','材料卷数','材料用途']
+        with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
+            writer = csv.writer(f)
+            writer.writerow(a)
+        ls4 = ls3
+        for ls5 in ls4:
+            with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
+                writer = csv.writer(f)
+                writer.writerow(ls5)
+
  
 class NeckScreen(Screen):
     
@@ -61,59 +110,30 @@ class NeckScreen(Screen):
     score2 = NumericProperty(0)
     score3 = NumericProperty(0)
 
-    def __init__(self, **kwargs):
-        super(NeckScreen, self).__init__(**kwargs)
-        self.materials = []
-        with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
-           reader = csv.reader(f)
-           for row in reader:
+    # def __init__(self, **kwargs):
+    #     super(NeckScreen, self).__init__(**kwargs)
+    #     self.materials = []
+    #     with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
+    #        reader = csv.reader(f)
+    #        for row in reader:
               
-              material = Material(row[0],row[1],row[2])
-              self.materials.append(material)
+    #           material = Material(row[0],row[1],row[2])
+    #           self.materials.append(material)
               
+    def lin(self):
+        mingcheng = self.ids['ming-cheng'].text
+        a = ChunChu()
+        a.ling(mingcheng)
     
-    def ling(self):
-        mingcheng = self.ids['ming-cheng']
-        
-
-
-
-        print(mingcheng)
-        with open('materials.csv','r', newline = '', encoding = 'utf-8')  as f:
-           row1 = csv.reader(f)
-           for row in row1:
-               if mingcheng.text==row[0]:
-                   self.score = float(row[1])
-                   self.score1 = float(row[2])
-           
     
-    def check_book(self,name):
-        
-        for book in self.materials:
-            if book.name == name:
-                return book
-    def delete(self):
-        
-        ls3 = []
-        for book in self.materials:
-           book2 = [book.name,book.amount,book.cylinder]
-           ls3.append(book2)
-        a = ['材料名称','材料重量','材料卷数','材料用途']
-        with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
-           writer = csv.writer(f)
-           writer.writerow(a)
-        ls4 = ls3
-        for ls5 in ls4:
-           with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
-              writer = csv.writer(f)
-              writer.writerow(ls5)
-              
+    
     def lend_materials(self):
         name = self.ids['ming-cheng'].text
         lingliao = self.ids['ling-liao'].text
-        # name = input('请输入材料的名称：')
-        # cylinder =input('请输入所领卷数：')
-        res = self.check_book(name)
+        manager = ChunChu()
+        
+        res = manager.check_book(name)
+        print(name)
         print('领取的材料是：', res)
         requisition =float(res.amount)/float(res.cylinder)
         univolume1 =float(requisition)*int(lingliao)
@@ -124,9 +144,11 @@ class NeckScreen(Screen):
 
         cylinder=float(res.cylinder)-float(lingliao)
         res.cylinder=round(cylinder,0)
-        # res.cylinder=int(cylinder)
+        
         print('领取后，材料剩余是：',res)
-        self.delete()
+        manager = ChunChu()
+        manager.delete()
+        
         
 class butScreen(Screen):
     scor = NumericProperty(0)
@@ -141,13 +163,14 @@ class butScreen(Screen):
               material = Material(row[0],row[1],row[2])
               self.materials.append(material)
     def ling(self):
-        mingcheng1 = self.ids['ming-cheng1']
+        mingcheng = self.ids['ming-cheng']
+        print(mingcheng)
         with open('materials.csv','r', newline = '', encoding = 'utf-8')  as f:
            row1 = csv.reader(f)
            for row in row1:
-               if mingcheng1.text==row[0]:
-                   self.scor = float(row[1])
-                   self.scor1 = float(row[2])
+               if mingcheng.text==row[0]:
+                   self.score = float(row[1])
+                   self.score1 = float(row[2])
     def check_book(self,name):
         
         for book in self.materials:
@@ -160,7 +183,7 @@ class butScreen(Screen):
         
         ls3 = []
         for book in self.materials:
-           book2 = [book.name,book.amount,book.cylinder]
+           book2 = [book.name,book.amount,book.cylinder,book.use]
            ls3.append(book2)
         a = ['材料名称','材料重量','材料卷数','材料用途']
         with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
@@ -172,11 +195,10 @@ class butScreen(Screen):
               writer = csv.writer(f)
               writer.writerow(ls5)
     def lend_material(self):
-        name = self.ids['ming-cheng1'].text
+        name = self.ids['ming-cheng'].text
         name1 = self.ids['shu-liang'].text
         lingliao = self.ids['juan-shu'].text
-        # name = input('请输入材料的名称：')
-        # cylinder =input('请输入所领卷数：')
+        
         print(name)
         res = self.check_book(name)
         print('领取的材料是：', res)
@@ -184,13 +206,37 @@ class butScreen(Screen):
         
         res.cylinder=float(res.cylinder)+float(lingliao)
 
-        # res.cylinder=int(cylinder)
+        
         print('入库后，材料剩余是：',res)
         self.delete()
+class SelectableRecycleGridLayout(FocusBehavior, LayoutSelectionBehavior,
+                                  RecycleGridLayout):
+    ''' Adds selection and focus behaviour to the view. '''
+
+
+class SelectableButton(RecycleDataViewBehavior, Button):
+     ''' Add selection support to the Button '''
+     
+     selected = BooleanProperty(False)
+
+class RV(BoxLayout,Screen):
+    materials =[]
+    with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
+           reader = csv.reader(f)
+           for row in reader:
+               for row1 in row:
+                   materials.append(row1)
+    data_items = ListProperty(materials)
+
+
+     
+
+
            
     
 
 class ScreenApp(App): 
+    title = "Kivy RecycleView & SQLite3 Demo"
 
     def load_kv(self, filename=None):
         with open('Screen.kv', encoding='utf-8') as f:
@@ -203,10 +249,14 @@ class ScreenApp(App):
         scs = SubScreen(name="sub")
         scn = NeckScreen(name="neck")
         scb = butScreen(name="but")
+        sds = RV(name="rvs")
+        # spd = BANScreen(name="rbd")
         sm.add_widget(scm)
         sm.add_widget(scs)
         sm.add_widget(scn)
         sm.add_widget(scb)
+        sm.add_widget(sds)
+        # sm.add_widget(spd)
         
         return sm
 ScreenApp().run()
