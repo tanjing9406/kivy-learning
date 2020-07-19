@@ -63,7 +63,7 @@ class ChunChu:
     score = NumericProperty(0)
     score1 = NumericProperty(0)
     def __init__(self, **kwargs):
-        super(ChunChu, self).__init__(**kwargs)
+        
         self.materials = []
         with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
            reader = csv.reader(f)
@@ -78,9 +78,7 @@ class ChunChu:
            row1 = csv.reader(f)
            for row in row1:
                if mingcheng==row[0]:
-                   self.score = float(row[1])
-                   self.score1 = float(row[2])
-
+                   return row
     def check_book(self,name):
         
         for book in self.materials:
@@ -90,9 +88,9 @@ class ChunChu:
     def delete(self):
         ls3 = []
         for book in self.materials:
-            book2 = [book.name,book.amount,book.cylinder,book.use]
+            book2 = [book.name,book.amount,book.cylinder]
             ls3.append(book2)
-        a = ['材料名称','材料重量','材料卷数','材料用途']
+        a = ['材料名称','材料重量','材料卷数']
         with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
             writer = csv.writer(f)
             writer.writerow(a)
@@ -101,7 +99,7 @@ class ChunChu:
             with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
                 writer = csv.writer(f)
                 writer.writerow(ls5)
-
+                
  
 class NeckScreen(Screen):
     
@@ -110,20 +108,16 @@ class NeckScreen(Screen):
     score2 = NumericProperty(0)
     score3 = NumericProperty(0)
 
-    # def __init__(self, **kwargs):
-    #     super(NeckScreen, self).__init__(**kwargs)
-    #     self.materials = []
-    #     with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
-    #        reader = csv.reader(f)
-    #        for row in reader:
-              
-    #           material = Material(row[0],row[1],row[2])
-    #           self.materials.append(material)
+   
               
     def lin(self):
         mingcheng = self.ids['ming-cheng'].text
         a = ChunChu()
-        a.ling(mingcheng)
+        
+        res = a.ling(mingcheng)
+        print(res)
+        self.score = float(res[1])
+        self.score1 = float(res[2])
     
     
     
@@ -183,7 +177,7 @@ class butScreen(Screen):
         
         ls3 = []
         for book in self.materials:
-           book2 = [book.name,book.amount,book.cylinder,book.use]
+           book2 = [book.name,book.amount,book.cylinder]
            ls3.append(book2)
         a = ['材料名称','材料重量','材料卷数','材料用途']
         with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
