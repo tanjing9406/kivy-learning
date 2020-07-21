@@ -307,5 +307,77 @@
                 y: 100
                 x: 250
                 on_press:root.manager.current="sub"
+<BANScreen>:
+    GridLayout:
+        cols: 2
+        rows: 7
+        padding: 100
+        spacing: 40
+        Label:
+            text:"材料名称"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            id: ming-cheng
+            font_size: 15
+        Label:
+            text:"剩余数量"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.scor)
+            font_size: 50  
+        Label:
+            text:"剩余卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.scor1)
+            font_size: 50  
+        Label:
+            text:"盘点数量"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput:
+            id: shu-liang
+            font_size: 15
+        Label:
+            text:"盘点卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput:
+            id: juan-shu
+            font_size: 15 
+        
+
  
+            
+        Label:
+            Button:
+                on_press: root.lend_material()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"保存数据"
+        Label:
+            Button:
+                
+                on_press: root.ling()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"查找"
+        Label:
+
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"返回上一页"
+                y: 100
+                x: 250
+                on_press:root.manager.current="sub"
 

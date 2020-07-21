@@ -62,7 +62,7 @@ class Material:
 class ChunChu:
     score = NumericProperty(0)
     score1 = NumericProperty(0)
-    def __init__(self, **kwargs):
+    def __init__(self):
         
         self.materials = []
         with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
@@ -85,23 +85,34 @@ class ChunChu:
             if book.name == name:
                 return book
     
-    def delete(self):
+    def delete(self,name1,BUS):
+        print(BUS)
+        print('------------------------------')
+        print(name1)
         ls3 = []
         for book in self.materials:
             book2 = [book.name,book.amount,book.cylinder]
-            ls3.append(book2)
-        a = ['材料名称','材料重量','材料卷数']
+            if book.name != name1:
+                ls3.append(book2)
+        
+        
+        a = BUS
         with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
-            writer = csv.writer(f)
-            writer.writerow(a)
+           writer = csv.writer(f)
+           writer.writerow(a)
         ls4 = ls3
         for ls5 in ls4:
-            with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
-                writer = csv.writer(f)
-                writer.writerow(ls5)
-                
+           with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
+              writer = csv.writer(f)
+              writer.writerow(ls5)
+        # for ls5 in ls4:  
+        #     with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
+        #         writer = csv.writer(f)
+        #         writer.writerow(ls5)
+        print('-----------------------')
+        print(ls4)        
  
-class NeckScreen(Screen):
+class NeckScreen(Screen,ChunChu):
     
     score = NumericProperty(0)
     score1 = NumericProperty(0)
@@ -122,12 +133,12 @@ class NeckScreen(Screen):
     
     
     def lend_materials(self):
-        name = self.ids['ming-cheng'].text
+        name1 = self.ids['ming-cheng'].text
         lingliao = self.ids['ling-liao'].text
         manager = ChunChu()
         
-        res = manager.check_book(name)
-        print(name)
+        res = manager.check_book(name1)
+        print(name1)
         print('领取的材料是：', res)
         requisition =float(res.amount)/float(res.cylinder)
         univolume1 =float(requisition)*int(lingliao)
@@ -138,71 +149,44 @@ class NeckScreen(Screen):
 
         cylinder=float(res.cylinder)-float(lingliao)
         res.cylinder=round(cylinder,0)
-        
-        print('领取后，材料剩余是：',res)
+        BUS = [res.name,res.amount,res.cylinder]
+        print(BUS)
+        print('-----------------------------')
         manager = ChunChu()
-        manager.delete()
+        manager.delete(name1,BUS)
         
         
 class butScreen(Screen):
     scor = NumericProperty(0)
     scor1 = NumericProperty(0)
-    def __init__(self, **kwargs):
-        super(butScreen, self).__init__(**kwargs)
-        self.materials = []
-        with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
-           reader = csv.reader(f)
-           for row in reader:
-              
-              material = Material(row[0],row[1],row[2])
-              self.materials.append(material)
-    def ling(self):
-        mingcheng = self.ids['ming-cheng']
-        print(mingcheng)
-        with open('materials.csv','r', newline = '', encoding = 'utf-8')  as f:
-           row1 = csv.reader(f)
-           for row in row1:
-               if mingcheng.text==row[0]:
-                   self.score = float(row[1])
-                   self.score1 = float(row[2])
-    def check_book(self,name):
-        
-        for book in self.materials:
-            print(book)
-            if book.name == name:
-                print('--------',book)
-                return book
     
-    def delete(self):
+    def ling(self):
+        mingcheng = self.ids['ming-cheng'].text
+        print(mingcheng)
+        a = ChunChu()
         
-        ls3 = []
-        for book in self.materials:
-           book2 = [book.name,book.amount,book.cylinder]
-           ls3.append(book2)
-        a = ['材料名称','材料重量','材料卷数','材料用途']
-        with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
-           writer = csv.writer(f)
-           writer.writerow(a)
-        ls4 = ls3
-        for ls5 in ls4:
-           with open('materials.csv','a',newline = '', encoding = 'utf-8')  as f:
-              writer = csv.writer(f)
-              writer.writerow(ls5)
+        res = a.ling(mingcheng)
+        self.scor = float(res[1])
+        self.scor1 = float(res[2])
+    
     def lend_material(self):
         name = self.ids['ming-cheng'].text
         name1 = self.ids['shu-liang'].text
         lingliao = self.ids['juan-shu'].text
         
-        print(name)
-        res = self.check_book(name)
+        manager = ChunChu()
+        
+        res = manager.check_book(name)
         print('领取的材料是：', res)
         res.amount =float(res.amount)+float(name1)
         
         res.cylinder=float(res.cylinder)+float(lingliao)
 
-        
-        print('入库后，材料剩余是：',res)
-        self.delete()
+        BUS = [res.name,res.amount,res.cylinder]
+        print(BUS)
+        print('-----------------------------')
+        manager = ChunChu()
+        manager.delete(name,BUS)
 class SelectableRecycleGridLayout(FocusBehavior, LayoutSelectionBehavior,
                                   RecycleGridLayout):
     ''' Adds selection and focus behaviour to the view. '''
@@ -214,15 +198,44 @@ class SelectableButton(RecycleDataViewBehavior, Button):
      selected = BooleanProperty(False)
 
 class RV(BoxLayout,Screen):
-    materials =[]
+    materials1 =[]
     with open('materials.csv', newline = '', encoding = 'utf-8')  as f:
            reader = csv.reader(f)
            for row in reader:
                for row1 in row:
-                   materials.append(row1)
-    data_items = ListProperty(materials)
+                   materials1.append(row1)
+    data_items = ListProperty(materials1)
+class BANScreen(Screen):
+    scor = NumericProperty(0)
+    scor1 = NumericProperty(0)
+    
+    def ling(self):
+        mingcheng = self.ids['ming-cheng'].text
+        print(mingcheng)
+        a = ChunChu()
+        
+        res = a.ling(mingcheng)
+        self.scor = float(res[1])
+        self.scor1 = float(res[2])
+    
+    def lend_material(self):
+        name = self.ids['ming-cheng'].text
+        name1 = self.ids['shu-liang'].text
+        lingliao = self.ids['juan-shu'].text
+        
+        manager = ChunChu()
+        
+        res = manager.check_book(name)
+        print('领取的材料是：', res)
+        res.amount =float(name1)
+        
+        res.cylinder=float(lingliao)
 
-
+        BUS = [res.name,res.amount,res.cylinder]
+        print(BUS)
+        print('-----------------------------')
+        manager = ChunChu()
+        manager.delete(name,BUS)
      
 
 
@@ -244,13 +257,13 @@ class ScreenApp(App):
         scn = NeckScreen(name="neck")
         scb = butScreen(name="but")
         sds = RV(name="rvs")
-        # spd = BANScreen(name="rbd")
+        spd = BANScreen(name="rbd")
         sm.add_widget(scm)
         sm.add_widget(scs)
         sm.add_widget(scn)
         sm.add_widget(scb)
         sm.add_widget(sds)
-        # sm.add_widget(spd)
+        sm.add_widget(spd)
         
         return sm
 ScreenApp().run()
