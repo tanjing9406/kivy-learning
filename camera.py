@@ -87,8 +87,7 @@ class ChunChu:
     
     def delete(self,name1,BUS):
         print(BUS)
-        print('------------------------------')
-        print(name1)
+        
         ls3 = []
         for book in self.materials:
             book2 = [book.name,book.amount,book.cylinder]
@@ -109,8 +108,7 @@ class ChunChu:
         #     with open('materials.csv','w', newline = '', encoding = 'utf-8')  as f:
         #         writer = csv.writer(f)
         #         writer.writerow(ls5)
-        print('-----------------------')
-        print(ls4)        
+               
  
 class NeckScreen(Screen,ChunChu):
     
@@ -126,7 +124,7 @@ class NeckScreen(Screen,ChunChu):
         a = ChunChu()
         
         res = a.ling(mingcheng)
-        print(res)
+        
         self.score = float(res[1])
         self.score1 = float(res[2])
     
@@ -138,20 +136,18 @@ class NeckScreen(Screen,ChunChu):
         manager = ChunChu()
         
         res = manager.check_book(name1)
-        print(name1)
-        print('领取的材料是：', res)
+        
         requisition =float(res.amount)/float(res.cylinder)
         univolume1 =float(requisition)*int(lingliao)
         univolume2 =int(univolume1)
-        print('领取材料重量：', univolume2)
+        
         self.score3 = int(univolume2)
         res.amount=float(res.amount)-univolume2
 
         cylinder=float(res.cylinder)-float(lingliao)
         res.cylinder=round(cylinder,0)
         BUS = [res.name,res.amount,res.cylinder]
-        print(BUS)
-        print('-----------------------------')
+        
         manager = ChunChu()
         manager.delete(name1,BUS)
         
@@ -162,7 +158,7 @@ class butScreen(Screen):
     
     def ling(self):
         mingcheng = self.ids['ming-cheng'].text
-        print(mingcheng)
+       
         a = ChunChu()
         
         res = a.ling(mingcheng)
@@ -177,14 +173,13 @@ class butScreen(Screen):
         manager = ChunChu()
         
         res = manager.check_book(name)
-        print('领取的材料是：', res)
+        
         res.amount =float(res.amount)+float(name1)
         
         res.cylinder=float(res.cylinder)+float(lingliao)
 
         BUS = [res.name,res.amount,res.cylinder]
-        print(BUS)
-        print('-----------------------------')
+      
         manager = ChunChu()
         manager.delete(name,BUS)
 class SelectableRecycleGridLayout(FocusBehavior, LayoutSelectionBehavior,
@@ -211,7 +206,7 @@ class BANScreen(Screen):
     
     def ling(self):
         mingcheng = self.ids['ming-cheng'].text
-        print(mingcheng)
+        
         a = ChunChu()
         
         res = a.ling(mingcheng)
@@ -226,14 +221,13 @@ class BANScreen(Screen):
         manager = ChunChu()
         
         res = manager.check_book(name)
-        print('领取的材料是：', res)
+       
         res.amount =float(name1)
         
         res.cylinder=float(lingliao)
 
         BUS = [res.name,res.amount,res.cylinder]
-        print(BUS)
-        print('-----------------------------')
+        
         manager = ChunChu()
         manager.delete(name,BUS)
      
