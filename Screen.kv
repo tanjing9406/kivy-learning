@@ -86,7 +86,7 @@
                 text:"手动入库"
                 y: 300
                 x: 250
-                on_press:root.manager.current="main"
+                on_press:root.manager.current="but"
         Label:
             Button:
                 size_hint: 1, 1
@@ -95,7 +95,7 @@
                 text:"显示所有材料"
                 y: 200
                 x: 250
-                on_press:root.manager.current="main"
+                on_press:root.manager.current="rvs"
         Label:
             Button:
                 size_hint: 1, 1
@@ -104,28 +104,21 @@
                 text:"盘点"
                 y: 100
                 x: 250
-                on_press:root.manager.current="main"
+                on_press:root.manager.current="rbd"
        
 <NeckScreen>:
     GridLayout:
         cols: 2
-        rows: 6
+        rows: 7
         padding: 100
-        spacing: 80
+        spacing: 40
         Label:
             text:"材料名称"
-
-            size: 50, self.height
-
-            
-            size: 50, self.height
-            
-
             size_hint: 1, 1
             size: 150, 50
         TextInput: 
             id: ming-cheng
-            font_size: 10 
+            font_size: 15
         Label:
             text:"剩余数量"
             size_hint: 1, 1
@@ -148,7 +141,7 @@
             size: 150, 50
         TextInput:
             id: ling-liao
-            font_size: 10 
+            font_size: 15
         Label:
             text:"领料数量"
             size_hint: 1, 1
@@ -158,12 +151,80 @@
             text: str(root.score3)
             font_size: 50  
         
-
- 
-            
         Label:
             Button:
                 on_press: root.lend_materials()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"保存数据"
+        Label:
+            Button:
+                
+                on_press: root.lin()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"查找"
+        Label:
+
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"返回上一页"
+                y: 100
+                x: 250
+                on_press:root.manager.current="sub"
+
+
+<butScreen>:
+    GridLayout:
+        cols: 2
+        rows: 7
+        padding: 100
+        spacing: 40
+        Label:
+            text:"材料名称"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            id: ming-cheng
+            font_size: 15
+        Label:
+            text:"剩余数量"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.scor)
+            font_size: 50  
+        Label:
+            text:"剩余卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.scor1)
+            font_size: 50  
+        Label:
+            text:"入库数量"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput:
+            id: shu-liang
+            font_size: 15
+        Label:
+            text:"入库卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput:
+            id: juan-shu
+            font_size: 15 
+        Label:
+            Button:
+                on_press: root.lend_material()
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
@@ -176,6 +237,138 @@
                 center: self.parent.center
                 size: 150, 50
                 text:"查找"
+        Label:
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"返回上一页"
+                y: 100
+                x: 250
+                on_press:root.manager.current="sub"
 
+
+<SelectableButton>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 1, 0, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<RV>:
+    BoxLayout:
+        orientation: "vertical"
+        GridLayout:
+            size_hint: 1, None
+            size_hint_y: None
+            height: 25
+            cols: 3
+
+            Label:
+                text: "材料名称"
+            Label:
+                text: "材料重量"
+            Label:
+                text: "材料卷数"
+
+        BoxLayout:
+            RecycleView:
+                viewclass: 'SelectableButton'
+                data: [{'text': str(x)} for x in root.data_items]
+                SelectableRecycleGridLayout:
+                    cols: 3
+                    default_size: None, dp(26)
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    multiselect: True
+#                     touch_multiselect: True
+        Label:
+
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"返回上一页"
+                y: 100
+                x: 250
+                on_press:root.manager.current="sub"
+<BANScreen>:
+    GridLayout:
+        cols: 2
+        rows: 7
+        padding: 100
+        spacing: 40
+        Label:
+            text:"材料名称"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput: 
+            id: ming-cheng
+            font_size: 15
+        Label:
+            text:"剩余数量"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.scor)
+            font_size: 50  
+        Label:
+            text:"剩余卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        Label:
+            top: root.top - 50
+            text: str(root.scor1)
+            font_size: 50  
+        Label:
+            text:"盘点数量"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput:
+            id: shu-liang
+            font_size: 15
+        Label:
+            text:"盘点卷数"
+            size_hint: 1, 1
+            size: 150, 50
+        TextInput:
+            id: juan-shu
+            font_size: 15 
+        
+
+ 
+            
+        Label:
+            Button:
+                on_press: root.lend_material()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"保存数据"
+        Label:
+            Button:
                 
+                on_press: root.ling()
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"查找"
+        Label:
+
+        Label:
+            Button:
+                size_hint: 1, 1
+                center: self.parent.center
+                size: 150, 50
+                text:"返回上一页"
+                y: 100
+                x: 250
+                on_press:root.manager.current="sub"
 
