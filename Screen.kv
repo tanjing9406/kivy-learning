@@ -266,7 +266,6 @@
             size_hint_y: None
             height: 25
             cols: 3
-
             Label:
                 text: "材料名称"
             Label:
@@ -286,17 +285,16 @@
                     height: self.minimum_height
                     orientation: 'vertical'
                     multiselect: True
-#                     touch_multiselect: True
+                    # touch_multiselect: True
         Label:
-
-        Label:
+            size_hint: 1, None
+            size_hint_y: None
+            height: 100
             Button:
                 size_hint: 1, 1
                 center: self.parent.center
                 size: 150, 50
                 text:"返回上一页"
-                y: 100
-                x: 250
                 on_press:root.manager.current="sub"
 <BANScreen>:
     GridLayout:
